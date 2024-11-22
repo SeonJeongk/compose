@@ -46,16 +46,20 @@ fun MyApp(
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-
     // 상태
     val isExpended = remember { mutableStateOf(false) }
+    val extraPadding = if (isExpended.value) 48.dp else 0.dp
 
     Surface(
         color = MaterialTheme.colorScheme.primary,
         modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         Row(modifier = modifier.padding(24.dp)) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(bottom = extraPadding)
+            ) {
                 Text("Hello")
                 Text(name)
             }
