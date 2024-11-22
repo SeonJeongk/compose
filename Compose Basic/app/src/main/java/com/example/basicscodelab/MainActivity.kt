@@ -13,6 +13,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,25 +46,24 @@ fun MyApp(
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+
+    // 상태
+    val isExpended = remember { mutableStateOf(false) }
+
     Surface(
         color = MaterialTheme.colorScheme.primary,
         modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
-        Row(
-            modifier = modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(24.dp)
-            ) {
+        Row(modifier = modifier.padding(24.dp)) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text("Hello")
                 Text(name)
             }
 
-            ElevatedButton(onClick = {}) {
-                Text("Show more")
+            // 상태에 따라 다른 텍스트 보여줌
+            ElevatedButton(
+                onClick = { isExpended.value = !isExpended.value }) {
+                Text(if (isExpended.value) "Show less" else "Show more")
             }
         }
     }
