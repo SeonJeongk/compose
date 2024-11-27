@@ -92,6 +92,25 @@ fun MyApp(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun HomeSection(
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    Column(modifier) {
+        // 제목과 슬롯
+        Text(
+            text = stringResource(title),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+                .padding(horizontal = 16.dp)
+        )
+        content()
+    }
+}
+
 // 상단 검색창
 @Composable
 fun SearchBar(modifier: Modifier = Modifier) {
@@ -191,6 +210,17 @@ fun FavoriteCollectionCard(
         }
     }
 }
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun HomeSectionPreview() {
+    BasicLayoutsTheme {
+        HomeSection(title = R.string.align_your_body) {
+            AlignYourBodyRow()
+        }
+    }
+}
+
 
 @Composable
 fun FavoriteCollectionGrid(
