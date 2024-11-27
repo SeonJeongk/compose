@@ -35,6 +35,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -88,7 +89,17 @@ private val favoriteCollectionsData = listOf(
     DrawableStringPair(R.drawable.fc6_nightly_wind_down, R.string.fc6_nightly_wind_down)
 )
 
-// 화면
+@Composable
+fun MySootheAppPortrait() {
+    MySootheTheme {
+        Scaffold(
+            bottomBar = { SootheBottomNavigation() }
+        ) { padding ->
+            HomeScreen(Modifier.padding(padding))
+        }
+    }
+}
+
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
     MySootheTheme {
@@ -277,6 +288,12 @@ fun FavoriteCollectionGrid(
             FavoriteCollectionCard(item.drawable, item.text)
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MySoothePreview() {
+    MySootheTheme { MySootheAppPortrait() }
 }
 
 @Preview(showBackground = true)
