@@ -12,12 +12,16 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -68,12 +72,22 @@ private val alignYourBodyData = listOf(
     DrawableStringPair(R.drawable.ab6_pre_natal_yoga, R.string.ab6_pre_natal_yoga)
 )
 
+private val favoriteCollectionsData = listOf(
+    DrawableStringPair(R.drawable.fc1_short_mantras, R.string.fc1_short_mantras),
+    DrawableStringPair(R.drawable.fc2_nature_meditations, R.string.fc2_nature_meditations),
+    DrawableStringPair(R.drawable.fc3_stress_and_anxiety, R.string.fc3_stress_and_anxiety),
+    DrawableStringPair(R.drawable.fc4_self_massage, R.string.fc4_self_massage),
+    DrawableStringPair(R.drawable.fc5_overwhelmed, R.string.fc5_overwhelmed),
+    DrawableStringPair(R.drawable.fc6_nightly_wind_down, R.string.fc6_nightly_wind_down)
+)
+
 @Composable
 fun MyApp(modifier: Modifier = Modifier) {
     BasicLayoutsTheme {
-        Column {
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
             SearchBar(Modifier.padding(bottom = 8.dp))
-            AlignYourBodyRow(modifier.padding(vertical = 8.dp))
+            AlignYourBodyRow()
+            FavoriteCollectionGrid()
         }
     }
 }
@@ -142,7 +156,7 @@ fun AlignYourBodyRow(
         contentPadding = PaddingValues(horizontal = 16.dp),
         modifier = modifier
     ) {
-        items(alignYourBodyData) {item ->
+        items(alignYourBodyData) { item ->
             AlignYourBodyElement(item.drawable, item.text)
         }
     }
@@ -178,6 +192,22 @@ fun FavoriteCollectionCard(
     }
 }
 
+@Composable
+fun FavoriteCollectionGrid(
+    modifier: Modifier = Modifier,
+) {
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(2),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier.height(168.dp)
+    ) {
+        items(favoriteCollectionsData) { item ->
+            FavoriteCollectionCard(item.drawable, item.text)
+        }
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
@@ -214,6 +244,16 @@ fun FavoriteCollectionCardPreview() {
         FavoriteCollectionCard(
             text = R.string.fc2_nature_meditations,
             drawable = R.drawable.fc2_nature_meditations,
+            modifier = Modifier.padding(8.dp)
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun FavoriteCollectionGridPreview() {
+    BasicLayoutsTheme {
+        FavoriteCollectionGrid(
             modifier = Modifier.padding(8.dp)
         )
     }
