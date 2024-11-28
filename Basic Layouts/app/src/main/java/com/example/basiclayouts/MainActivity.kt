@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -43,6 +42,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,11 +62,13 @@ import androidx.compose.ui.unit.dp
 import com.example.basiclayouts.ui.theme.MySootheTheme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MySootheTheme {
-                HomeScreen(Modifier.fillMaxSize())
+                val windowSizeClass = calculateWindowSizeClass(this)
+                MySootheApp(windowSize = windowSizeClass)
             }
         }
     }
@@ -91,6 +96,19 @@ private val favoriteCollectionsData = listOf(
     DrawableStringPair(R.drawable.fc5_overwhelmed, R.string.fc5_overwhelmed),
     DrawableStringPair(R.drawable.fc6_nightly_wind_down, R.string.fc6_nightly_wind_down)
 )
+
+@Composable
+fun MySootheApp(windowSize: WindowSizeClass) {
+    when (windowSize.widthSizeClass) {
+        WindowWidthSizeClass.Compact -> {
+            MySootheAppPortrait()   // 세로
+        }
+
+        WindowWidthSizeClass.Expanded -> {
+            MySootheAppLandscape()  // 가로
+        }
+    }
+}
 
 // 세로 모드
 @Composable
