@@ -1,6 +1,7 @@
 package com.example.basiclayouts
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
@@ -68,6 +69,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MySootheTheme {
                 val windowSizeClass = calculateWindowSizeClass(this)
+                //Log.d("debugging", "WindowWidthSizeClass: ${windowSizeClass.widthSizeClass}")
                 MySootheApp(windowSize = windowSizeClass)
             }
         }
@@ -104,7 +106,7 @@ fun MySootheApp(windowSize: WindowSizeClass) {
             MySootheAppPortrait()   // 세로
         }
 
-        WindowWidthSizeClass.Expanded -> {
+        WindowWidthSizeClass.Medium -> {
             MySootheAppLandscape()  // 가로
         }
     }
