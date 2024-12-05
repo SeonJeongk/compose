@@ -48,11 +48,11 @@ fun WellnessScreen(modifier: Modifier = Modifier) {
 fun WaterCounter(modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(16.dp)) {
         var count by remember { mutableStateOf(0) }
-        Text(
-            text = "You've had $count glasses.",
-            modifier = modifier.padding(16.dp)
-        )
-        Button(onClick = { count++ }, Modifier.padding(top = 8.dp)) {
+
+        if (count > 0) {
+            Text("You've had $count glasses.")
+        }
+        Button(onClick = { count++ }, Modifier.padding(top = 8.dp), enabled = count < 10) {
             Text("Add one")
         }
     }
